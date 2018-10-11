@@ -1,6 +1,5 @@
 import logging
-import os
-
+import subprocess
 
 class Frida():
     def __init__(self):
@@ -10,11 +9,14 @@ class Frida():
         self.switch["Mat"+"ilda"] = "Fr"+"ida"
         self.log = logging.getLogger()
         with open(self.name+".py") as in_file:
-            self.schwester= in_file.read().replace(self.name , self.switch[self.name])
+            self.schwester= in_file.read().replace(self.name , self.getSchwester())
 
+
+    def getSchwester(self):
+        return self.switch[self.name]
 
     def run(self):
-        print (self.name)
+        print(self.name)
 
     def close(self):
         with open(self.switch[self.name]+".py","w") as out_file:
@@ -25,3 +27,4 @@ if __name__ == '__main__':
     pp = Frida()
     pp.run()
     pp.close()
+    subprocess.call(['python',pp.getSchwester()+".py"])
